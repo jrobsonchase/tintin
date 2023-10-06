@@ -474,10 +474,14 @@ void init_tintin(int greeting)
 	gtd->system->term   = strdup(getenv("TERM") ? getenv("TERM") : "UNKNOWN");
 
 	gtd->system->tt_dir = restringf(gtd->system->tt_dir, "%s/%s", gtd->system->home, TINTIN_DIR);
+	if (getenv("TINTIN_DIR"))
+	{
+		gtd->system->tt_dir = restring(gtd->system->tt_dir, getenv("TINTIN_DIR"));
+	}
 
 	if (mkdir(gtd->system->tt_dir, 0755) && errno != EEXIST)
 	{
-		gtd->system->tt_dir = restringf(gtd->system->tt_dir, "%s", TINTIN_DIR);
+		gtd->system->tt_dir = restring(gtd->system->tt_dir, TINTIN_DIR);
 
 		mkdir(gtd->system->tt_dir, 0755);
 	}
